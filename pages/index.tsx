@@ -77,6 +77,19 @@ const IndexPage = () => {
       },
       false
     );
+
+    canvas.addEventListener(
+      "touchmove",
+      function (e) {
+        e.preventDefault();
+        const touch = e.targetTouches[0];
+        if (touch) {
+          const brushPos = getBrushPos(touch.pageX, touch.pageY);
+          drawDot(brushPos.x, brushPos.y);
+        }
+      },
+      false
+    );
   }, [height, width, bgImage]);
 
   return (
@@ -98,6 +111,7 @@ const IndexPage = () => {
       <style jsx global>{`
         body {
           margin: 0;
+          position: fixed;
         }
 
         .canvas {
