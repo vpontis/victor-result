@@ -85,9 +85,12 @@ const IndexPage = () => {
         title={"Victor Results"}
         description={"Scratch to reveal the race time!"}
         imageUrl={
-          "https://cdn.lu.ma/misc/y3/75060abf-2ced-4aa7-8cc0-3a7a52821884"
+          "https://cdn.lu.ma/misc/5y/918b1dff-c7a3-4e33-90d2-527a727632e7"
         }
-        imageSize={{ width: 1730, height: 1730 }}
+        imageSize={{ width: 1664, height: 1664 }}
+        faviconUrl={
+          "https://cdn.lu.ma/misc/qh/24768432-0027-4189-a06a-c53ca5c9ad27"
+        }
       />
 
       <canvas className="canvas" ref={canvasRef}></canvas>
