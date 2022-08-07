@@ -9,7 +9,7 @@ const IndexPage = () => {
 
   const { height, width } = useWindowSize();
   const bgImage = useImage(
-    "https://cdn.lu.ma/misc/1x/84acba27-3eb0-485c-b680-c6d00e73c117"
+    "https://cdn.lu.ma/misc/sp/3506d109-1b1f-45e3-8e02-743e3bb44255"
   );
 
   useEffect(() => {
@@ -22,48 +22,84 @@ const IndexPage = () => {
     canvas.width = size;
     canvas.height = size;
 
-    console.log("canvas", canvas);
     if (!canvas) {
       return;
     }
+
     const ctx = canvas.getContext("2d");
     ctx.drawImage(bgImage, 0, 0, size, size);
+    canvas.style.backgroundImage = `url("https://cdn.lu.ma/misc/1x/84acba27-3eb0-485c-b680-c6d00e73c117")`;
 
     const units = size / 100;
 
-    ctx.rotate((3 * Math.PI) / 180);
-    ctx.fillStyle = "darkgray";
-    ctx.fillRect(units * 7, units * 53, units * 60, units * 40);
+    const brushRadius = units * 4;
 
-    ctx.font = "68px lato";
-    ctx.fillStyle = "white";
+    function detectLeftButton(event) {
+      if ("buttons" in event) {
+        return event.buttons === 1;
+      } else if ("which" in event) {
+        return event.which === 1;
+      } else {
+        return event.button === 1;
+      }
+    }
 
-    const textX = units * 16;
-    const textY = units * 70;
-    ctx.fillText("scratch to", textX, textY);
-    ctx.fillText("reveal", textX + units * 7, textY + units * 11);
+    function getBrushPos(xRef, yRef) {
+      const bridgeRect = canvas.getBoundingClientRect();
+      return {
+        x: Math.floor(
+          ((xRef - bridgeRect.left) / (bridgeRect.right - bridgeRect.left)) *
+            size
+        ),
+        y: Math.floor(
+          ((yRef - bridgeRect.top) / (bridgeRect.bottom - bridgeRect.top)) *
+            size
+        ),
+      };
+    }
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    function drawDot(mouseX, mouseY) {
+      ctx.beginPath();
+      ctx.arc(mouseX, mouseY, brushRadius, 0, 2 * Math.PI, true);
+      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fill();
+    }
 
-    console.log("ctx", ctx);
+    canvas.addEventListener(
+      "mousemove",
+      function (e) {
+        const brushPos = getBrushPos(e.clientX, e.clientY);
+        const leftBut = detectLeftButton(e);
+        if (leftBut) {
+          drawDot(brushPos.x, brushPos.y);
+        }
+      },
+      false
+    );
   }, [height, width, bgImage]);
 
   return (
     <div style={{ display: "flex" }}>
       <SocialHead
-        title={"Victor Result"}
+        title={"Victor Results"}
         description={"Scratch to reveal the race time!"}
         imageUrl={
           "https://cdn.lu.ma/misc/y3/75060abf-2ced-4aa7-8cc0-3a7a52821884"
         }
         imageSize={{ width: 1730, height: 1730 }}
       />
-      
-      <canvas id="tutorial" ref={canvasRef}></canvas>
+
+      <canvas className="canvas" ref={canvasRef}></canvas>
 
       <style jsx global>{`
         body {
           margin: 0;
+        }
+
+        .canvas {
+          background-size: cover;
+          cursor: crosshair;
         }
       `}</style>
     </div>
