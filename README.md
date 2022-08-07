@@ -1,3 +1,3 @@
 # Victor Result
 
-[victorresult.com](https://victorresult.com)
+[victorresults.com](https://victorresults.com)
