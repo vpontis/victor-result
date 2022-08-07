@@ -61,7 +61,7 @@ const IndexPage = () => {
     function drawDot(mouseX, mouseY) {
       ctx.beginPath();
       ctx.arc(mouseX, mouseY, brushRadius, 0, 2 * Math.PI, true);
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+      ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
       ctx.globalCompositeOperation = "destination-out";
       ctx.fill();
     }
