@@ -4,12 +4,16 @@ import { SocialHead } from "../components/SocialHead";
 import { useImage } from "../components/useImage";
 import { useWindowSize } from "../components/useWindowSize";
 
+const overlay = 'https://cdn.lu.ma/misc/1k/3d5700a9-2068-4e5b-8570-dad3665e527b'
+const background = 'https://cdn.lu.ma/misc/wn/4d602c2a-4d82-4fb9-8809-1f5025e34c7e'
+const composite = 'https://cdn.lu.ma/misc/yj/cede74bf-9709-4476-9d58-5ebe7b0516a2'
+
 const IndexPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const { height, width } = useWindowSize();
   const bgImage = useImage(
-    "https://cdn.lu.ma/misc/sp/3506d109-1b1f-45e3-8e02-743e3bb44255"
+    background
   );
 
   useEffect(() => {
@@ -28,7 +32,7 @@ const IndexPage = () => {
 
     const ctx = canvas.getContext("2d");
     ctx.drawImage(bgImage, 0, 0, size, size);
-    canvas.style.backgroundImage = `url("https://cdn.lu.ma/misc/1x/84acba27-3eb0-485c-b680-c6d00e73c117")`;
+    canvas.style.backgroundImage = `url(${overlay})`;
 
     const units = size / 100;
 
